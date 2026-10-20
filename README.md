@@ -125,13 +125,18 @@ licensing restrictions. Place them in `data_in/` before running the pipeline.
 - **Size:** ~8.2 GB total
 - **Note:** Annual average rasters 1980-2019. Required for the water quality pipeline (scripts 20-33).
 
-#### 4. ISIMIP future water quality projections
+#### 4. Future water quality projections (DynQual)
 
-- **Files:** Multiple NetCDF files
-- **Download:** <https://www.isimip.org/> (ISIMIP3b)
+- **File:** `future_water_quality.zip` (extract its NetCDF contents)
+- **Download:** [Jones et al. (2023), *Global hydrology and water quality datasets under uncertain climate and socio-economic change*](https://doi.org/10.5281/zenodo.7811612)
 - **Destination:** `data_in/wq_future/`
-- **Size:** ~637 MB
-- **Note:** Required for future water quality classification (scripts 23-24, not in default pipeline).
+- **Size:** 38.1 GB (download archive)
+- **Coverage:** 10 km global projections, averaged monthly over 2005–2020,
+  2021–2040, 2041–2060, 2061–2080, and 2081–2100, for SSP1-RCP2.6,
+  SSP3-RCP7.0, and SSP5-RCP8.5 under five general circulation models.
+- **Variables:** discharge, channel storage, water temperature, total dissolved
+  solids, biological oxygen demand, and fecal coliform.
+- **Note:** These projections are not used by the current default pipeline.
 
 #### 5. Predictor rasters
 
