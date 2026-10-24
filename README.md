@@ -75,7 +75,6 @@ models trained on JMP household survey data with population-weighted global pred
 | `MICS_bndr/` | MICS survey boundary shapefiles | [mics.unicef.org](https://mics.unicef.org) |
 | `wq_annual_values/` | Water quality station annual values (4 CSVs) | GEMStat / national monitoring |
 | `wq_annual_classes/` | Water quality station annual classes (4 CSVs) | GEMStat / national monitoring |
-| `ihme_wat_access/` | IHME water access estimates (ADM0 & ADM1) | [IHME](https://ghdx.healthdata.org/) |
 | `EawagPHH-mapping-.../` | Eawag safe drinking water mapping estimates (135 LMICs) | [GitHub](https://github.com/eawag-phh/mapping-safe-drinking-water-use-LMICs) |
 | `r_pop_GHS_1985_2025_5arcmin.tif` | GHS-POP population raster (1985-2025, 5-arcmin) | [GHSL](https://human-settlement.emergency.copernicus.eu/) |
 
@@ -126,6 +125,14 @@ come from companion projects or public data sources. Paths are hard-coded in
 | `urbanisationCntryWise_GHS2023a.tif` | Urbanisation | GHSL-derived | GHS Urban Centre Database |
 | `rast_gdi_1990_2023.tif` | Gender Development Index | Companion project | Subnational HDI |
 | `rast_vdem_adm1_v2x_corr_1990_2024.tif` | Corruption | V-Dem-derived | Coppedge et al. (2024) |
+
+#### 5. IHME drinking water access estimates (validation only)
+
+IHME water-access rasters used for validation are not included in this
+repository. Download them separately from [GHDx](https://ghdx.healthdata.org/)
+and place them in `data_in/ihme_wat_access/`. They are used only by scripts 15
+and 15b for benchmark comparison; the G-HSDW dataset itself does not depend on
+these files.
 
 ## How to run
 
