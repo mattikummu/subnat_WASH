@@ -63,8 +63,6 @@ predictor_cols_adm0 <- c(
   "travel_time", "aridity", "gdi", "corruption", "gw_depth"
 )
 
-gadm_path <- "/Users/mkummu/R/GIS_data_common/gadm_410-levels.gpkg"
-
 # Countries already in subnational training set come from polygon attributes
 countries_with_subnat <- sort(unique(c(best_attrs$iso3, second_attrs$iso3)))
 

@@ -1,39 +1,32 @@
 # 05b_build_adm1_shared_assets.R
 # ---------------------------------------------------------------------------
-# Build shared ADM1 static assets for both water and sanitation:
+# Build ADM1 static assets for drinking water:
 #   1) 5-arcmin template raster (via 1-arcmin rasterize -> 5-arcmin modal)
 #   2) simplified geometry-only GPKG
 #
 # Always (re)creates files on disk regardless of prior existence.
 #
-# Outputs (water):
+# Outputs:
 #   results_gis/wash_adm1_template_5arcmin.tif
 #   results_gis/polyg_wash_adm1_1990_2023_geomonly_simpl.gpkg
 #   results_gis/polyg_wash_adm0_geomonly_simpl.gpkg
-#
-# Outputs (sanitation; copied from water side):
-#   results_gis_sanit/sanit_adm1_template_5arcmin.tif
-#   results_gis_sanit/polyg_sanit_adm1_1990_2023_geomonly_simpl.gpkg
-#   results_gis_sanit/polyg_sanit_adm0_geomonly_simpl.gpkg
 # ---------------------------------------------------------------------------
 
 library(terra)
 library(sf)
 
 source("functions/f_simplify_polyg.R")
+source("config.R")
+paths <- subnat_wash_paths()
 
-dir.create("results_gis",       showWarnings = FALSE)
-dir.create("results_gis_sanit", showWarnings = FALSE)
+dir.create("results_gis", showWarnings = FALSE)
 
-template_wash_path   <- "results_gis/wash_adm1_template_5arcmin.tif"
-template_sanit_path  <- "results_gis_sanit/sanit_adm1_template_5arcmin.tif"
+template_wash_path <- "results_gis/wash_adm1_template_5arcmin.tif"
 
-geomonly_wash_simpl_path  <- "results_gis/polyg_wash_adm1_1990_2023_geomonly_simpl.gpkg"
-geomonly_sanit_simpl_path <- "results_gis_sanit/polyg_sanit_adm1_1990_2023_geomonly_simpl.gpkg"
-geomonly_adm0_wash_simpl_path  <- "results_gis/polyg_wash_adm0_geomonly_simpl.gpkg"
-geomonly_adm0_sanit_simpl_path <- "results_gis_sanit/polyg_sanit_adm0_geomonly_simpl.gpkg"
+geomonly_wash_simpl_path <- "results_gis/polyg_wash_adm1_1990_2023_geomonly_simpl.gpkg"
+geomonly_adm0_wash_simpl_path <- "results_gis/polyg_wash_adm0_geomonly_simpl.gpkg"
 
-gadm_path <- "/Users/mkummu/R/GIS_data_common/gadm_410-levels.gpkg"
+gadm_path <- paths$gadm
 
 # ── Load shared ADM1 geometry ──────────────────────────────────────────────
 message("== Loading shared ADM1 geometry ==")
@@ -48,7 +41,7 @@ if (anyDuplicated(adm1_poly$adm_id) > 0) {
 message("== Template raster ==")
 message("  Building via 1-arcmin rasterization -> 5-arcmin aggregation ...")
 
-pop_path <- "/Users/mkummu/R/GIS_data_common/GHS_POP/r_pop_GHS_1985_2025_5arcmin.tif"
+pop_path <- paths$population
 r_ref <- rast(pop_path, lyrs = 1)
 r_ref_1arcmin <- rast(
   nrows = nrow(r_ref) * 5,
@@ -62,9 +55,7 @@ r_template <- aggregate(r_template_1arcmin, fact = 5, fun = "modal", na.rm = TRU
 names(r_template) <- "adm_id"
 
 writeRaster(r_template, template_wash_path,  datatype = "INT4S", gdal = "COMPRESS=LZW", overwrite = TRUE)
-file.copy(template_wash_path, template_sanit_path, overwrite = TRUE)
 message(sprintf("    Saved: %s", template_wash_path))
-message(sprintf("    Saved: %s", template_sanit_path))
 message(sprintf("  Template dims: %d x %d", nrow(r_template), ncol(r_template)))
 
 # ── Simplified geometry-only GPKGs ─────────────────────────────────────────
@@ -82,9 +73,7 @@ f_simplify_polyg(
 )
 file.remove(gpkg_geomonly_tmp)
 
-file.copy(geomonly_wash_simpl_path, geomonly_sanit_simpl_path, overwrite = TRUE)
 message(sprintf("    Saved: %s", geomonly_wash_simpl_path))
-message(sprintf("    Saved: %s", geomonly_sanit_simpl_path))
 
 # ── Simplified ADM0 geometry-only GPKGs ────────────────────────────────────
 message("== Simplified ADM0 geometry-only GPKGs ==")
@@ -110,8 +99,6 @@ f_simplify_polyg(
 )
 file.remove(gpkg_adm0_geomonly_tmp)
 
-file.copy(geomonly_adm0_wash_simpl_path, geomonly_adm0_sanit_simpl_path, overwrite = TRUE)
 message(sprintf("    Saved: %s", geomonly_adm0_wash_simpl_path))
-message(sprintf("    Saved: %s", geomonly_adm0_sanit_simpl_path))
 
 message("\nDone.")

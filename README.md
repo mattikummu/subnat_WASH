@@ -1,9 +1,8 @@
-# Subnational WASH & Water Quality
+# Subnational Drinking Water & Water Quality
 
-Pipeline for estimating subnational (ADM1-level) drinking water, sanitation, and
-water quality indicators for all countries from 1990 to 2023, using XGBoost
-models trained on JMP household survey data with population-weighted global
-predictors.
+Pipeline for estimating subnational (ADM1-level) drinking-water and historical
+water-quality indicators for all countries from 1990 to 2023, using XGBoost
+models trained on JMP household survey data with population-weighted global predictors.
 
 ## Pipeline overview
 
@@ -12,8 +11,7 @@ predictors.
 | 1-6 | **Common setup** | Download JMP data, extract regions, link to GADM/DHS/MICS boundaries, select best divisions, extract global predictors, build shared ADM1 template |
 | 7-27 | **Drinking water** | Train XGBoost on water indicators, fill ADM0/ADM1 gaps, rasterize, Theil-Sen slopes, population estimates, validation & KPI plots |
 | 28-30 | **Water quality** | Classify DynQual WQ rasters (pathogen, salinity, organic), extract to ADM1, Theil-Sen slope maps |
-| 31-33 | **Bivariate (WASH x WQ)** | Bivariate maps WASH x water quality / pathogen, population trends by combined class |
-| 34-47 | **Sanitation** | Whole pipeline repeated for sanitation indicators |
+| 31-33 | **Bivariate (WASH x WQ)** | Bivariate maps from scripts 31, 31b, and 32; population trends by combined class |
 
 ## Repository structure
 
@@ -53,25 +51,9 @@ predictors.
 ├── 31_wash_wq_bivariate_matrix.R
 ├── 31b_wash_pathogen_bivariate_matrix.R
 ├── 32_wq_wash_population_trends.R
-├── 46_prepare_xgboost_data_sanit.R
-├── 47_train_xgboost_sanit.R
-├── 48_analyse_xgboost_importance_sanit.R
-├── 49_prepare_adm0_data_sanit.R
-├── 49b_prepare_adm0_historical_sanit.R
-├── 50_fill_adm0_sanit_with_xgboost.R
-├── 50b_merge_adm0_historical_modern_sanit.R
-├── 50c_merge_adm0_historical_modern_sanit.R
-├── 51_fill_adm1_sanit_with_xgboost.R
-├── 52_rasterize_adm1_sanit.R
-├── 53_sanit_slopes_maps.R
-├── 53b_sanit_slopes_maps_adm0.R
-├── 54_sanit_population_estimates.R
-├── 57_input_data_maps_sanit.R
 ├── functions/
-│   ├── f_optimise_tweedie.R
 │   ├── f_simplify_polyg.R
-│   ├── f_small_country_training.R
-│   └── f_small_country_training_old.R
+│   └── f_small_country_training.R
 ├── data_in/                           # Input data (see below)
 ├── results/                           # Generated outputs (not in repo)
 ├── figures_*/                         # Generated figures (not in repo)
@@ -123,22 +105,9 @@ licensing restrictions. Place them in `data_in/` before running the pipeline.
   - `data_in/dynqual/organic_annualAvg_1980_2019.nc`
 - **Download:** <https://doi.org/10.34894/3Q0BVQ> (Utrecht University Dataverse)
 - **Size:** ~8.2 GB total
-- **Note:** Annual average rasters 1980-2019. Required for the water quality pipeline (scripts 20-33).
+- **Note:** Annual average rasters 1980-2019. Required for the water-quality and bivariate pipelines.
 
-#### 4. Future water quality projections (DynQual)
-
-- **File:** `future_water_quality.zip` (extract its NetCDF contents)
-- **Download:** [Jones et al. (2023), *Global hydrology and water quality datasets under uncertain climate and socio-economic change*](https://doi.org/10.5281/zenodo.7811612)
-- **Destination:** `data_in/wq_future/`
-- **Size:** 38.1 GB (download archive)
-- **Coverage:** 10 km global projections, averaged monthly over 2005–2020,
-  2021–2040, 2041–2060, 2061–2080, and 2081–2100, for SSP1-RCP2.6,
-  SSP3-RCP7.0, and SSP5-RCP8.5 under five general circulation models.
-- **Variables:** discharge, channel storage, water temperature, total dissolved
-  solids, biological oxygen demand, and fecal coliform.
-- **Note:** These projections are not used by the current default pipeline.
-
-#### 5. Predictor rasters
+#### 4. Predictor rasters
 
 All predictor rasters are population-weighted and extracted in script 05. They
 come from companion projects or public data sources. Paths are hard-coded in
@@ -170,7 +139,7 @@ source("00_setup.R")
 
 ```r
 source("00_setup.R")
-run_pipeline()                  # all 47 steps
+run_pipeline()                  # all 33 steps
 ```
 
 ### 3. Run sub-pipelines
@@ -181,7 +150,6 @@ run_common()                    # steps 1-6 (shared setup)
 run_water()                     # steps 7-27 (drinking water)
 run_wq()                        # steps 28-30 (water quality)
 run_bivariate()                 # steps 31-33 (WASH x WQ)
-run_sanit()                     # steps 34-47 (sanitation)
 ```
 
 ### 4. Skip the JMP download (if already present)
@@ -202,11 +170,9 @@ in the repository):
 
 - `results/` - CSVs, GeoPackages, RDS files, model objects, extracted data
 - `figures_drinking/` - Drinking water figures and maps
-- `figures_sanit/` - Sanitation figures and maps
 - `figures_bivariate/` - Bivariate WASH x WQ figures
 - `figures_wq/` - Water quality figures and maps
 - `figures_validation_wash/` - Drinking water validation figures
-- `figures_validation_sanitation/` - Sanitation validation figures
 
 ## License and citation
 

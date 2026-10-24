@@ -55,7 +55,6 @@ predictor_cols  <- c(
 )
 
 years_hist <- 1990:2015
-gadm_path  <- "/Users/mkummu/R/GIS_data_common/gadm_410-levels.gpkg"
 
 clamp_pct <- function(x) pmax(0, pmin(100, x))
 

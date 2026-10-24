@@ -28,9 +28,11 @@ suppressPackageStartupMessages({
 
 dir.create("results", showWarnings = FALSE)
 
-dhs_dir   <- "data_in/DHS_bndr"
-mics_dir  <- "data_in/MICS_bndr"
-gadm_path <- "/Users/mkummu/R/GIS_data_common/gadm_410-levels.gpkg"
+source("config.R")
+paths <- subnat_wash_paths()
+dhs_dir <- paths$dhs
+mics_dir <- paths$mics
+gadm_path <- paths$gadm
 
 # ── 1. Load matched WASH data ─────────────────────────────────────────────────
 message("Loading results/JMP_regions_matched_data.csv ...")

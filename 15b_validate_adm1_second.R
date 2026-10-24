@@ -45,9 +45,11 @@ suppressPackageStartupMessages({
 dir.create("results", showWarnings = FALSE)
 
 ### 0. Paths and setup ----
+source("config.R")
+paths <- subnat_wash_paths()
 second_gpkg_path <- "results/wash_second_division.gpkg"
 second_data_path <- "results/wash_second_division_data.csv"
-pop_path <- "/Users/mkummu/R/GIS_data_common/GHS_POP/r_pop_GHS_1985_2025_5arcmin.tif"
+pop_path <- paths$population
 
 our_rasters <- c(
   Basic = "results_gis/rast_wash_Basic_1990_2023.tif",

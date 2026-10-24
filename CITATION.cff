@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+title: "Subnational Drinking Water and Water Quality Pipeline"
+version: 0.1.0
+date-released: 2026-10-24
+authors:
+  - family-names: Kummu
+    given-names: Matti
+license: MIT
+repository-code: "https://github.com/mattikummu/subnat_WASH"

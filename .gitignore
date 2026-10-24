@@ -2,6 +2,9 @@
 .Rhistory
 .RData
 .Ruserdata
+renv/library/
+renv/staging/
+renv/cache/
 data_gis/
 results/
 *.gpkg

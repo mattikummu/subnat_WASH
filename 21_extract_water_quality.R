@@ -29,7 +29,9 @@ dir.create("results",     showWarnings = FALSE)
 dir.create("results_gis", showWarnings = FALSE)
 
 ### 0. Setup ----
-pop_path      <- "/Users/mkummu/R/GIS_data_common/GHS_POP/r_pop_GHS_1985_2025_5arcmin.tif"
+source("config.R")
+paths <- subnat_wash_paths()
+pop_path <- paths$population
 gpkg_simpl_path <- "results_gis/polyg_wash_adm1_1990_2023_geomonly_simpl.gpkg"
 
 wq_rasters <- list(

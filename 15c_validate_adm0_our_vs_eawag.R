@@ -47,11 +47,13 @@ dir.create("results", showWarnings = FALSE)
 dir.create("results_gis", showWarnings = FALSE)
 
 ### 0. Paths ----
+source("config.R")
+paths <- subnat_wash_paths()
 eawag_csv <- "data_in/EawagPHH-mapping-safe-drinking-water-use-LMICs-00a413e/5_Predictions/prediction_results/Fullprediction_improved.csv"
 eawag_scope_csv <- "data_in/EawagPHH-mapping-safe-drinking-water-use-LMICs-00a413e/5_Predictions/prediction_results/SMDWPredictions_GADMlevel1.csv"
 xlsx_path <- "data_in/JMP_2025_WLD.xlsx"
-gadm_path <- "/Users/mkummu/R/GIS_data_common/gadm_410-levels.gpkg"
-pop_path <- "/Users/mkummu/R/GIS_data_common/GHS_POP/r_pop_GHS_1985_2025_5arcmin.tif"
+gadm_path <- paths$gadm
+pop_path <- paths$population
 our_basic_tif <- "results_gis/rast_wash_Basic_1990_2023.tif"
 our_limited_tif <- "results_gis/rast_wash_Limited_1990_2023.tif"
 

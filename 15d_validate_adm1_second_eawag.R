@@ -40,11 +40,13 @@ suppressPackageStartupMessages({
 dir.create("results", showWarnings = FALSE)
 
 ### 0. Paths ----
+source("config.R")
+paths <- subnat_wash_paths()
 second_gpkg_path <- "results/wash_second_division.gpkg"
 second_data_path <- "results/wash_second_division_data.csv"
 scope_path <- "results/validation_eawag_scope_iso3.csv"
 scope_fallback <- "data_in/EawagPHH-mapping-safe-drinking-water-use-LMICs-00a413e/5_Predictions/prediction_results/SMDWPredictions_GADMlevel1.csv"
-pop_path <- "/Users/mkummu/R/GIS_data_common/GHS_POP/r_pop_GHS_1985_2025_5arcmin.tif"
+pop_path <- paths$population
 our_basic_tif <- "results_gis/rast_wash_Basic_1990_2023.tif"
 our_limited_tif <- "results_gis/rast_wash_Limited_1990_2023.tif"
 eawag_tif <- "results_gis/rast_eawag_improved_adm1_5arcmin.tif"

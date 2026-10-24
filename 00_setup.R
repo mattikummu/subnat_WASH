@@ -1,21 +1,19 @@
 # 00_setup.R
 # ─────────────────────────────────────────────────────────────────────────────
-# Master setup script for the subnational WASH & sanitation pipeline.
+# Master setup script for the subnational drinking-water and water-quality pipeline.
 #
 # 1. Installs all required packages (if not already installed)
 # 2. Optionally runs the full pipeline in sequence
 #
 # Pipelines:
-#   Steps  1-6   Common setup (shared by water + sanitation)
+#   Steps  1-6   Common setup
 #   Steps  7-27  Drinking-water (scripts 06-17 + validation/KPI)
 #   Steps 28-30  Water quality  (scripts 20-22)
 #   Steps 31-33  Bivariate WASH × WQ / pathogen (scripts 31-32)
-#   Steps 34-47  Sanitation (scripts 46-57 + variants)
 #
 # Usage:
 #   source("00_setup.R")           # install packages only
 #   source("00_setup.R"); run_pipeline()   # install + run all
-#   source("00_setup.R"); run_sanit()      # sanitation pipeline only
 # ─────────────────────────────────────────────────────────────────────────────
 
 # ── Required packages ─────────────────────────────────────────────────────────
@@ -81,7 +79,7 @@ if (length(new_packages) > 0) {
 # The step number (left) is used by run_pipeline(steps = ...) below.
 
 pipeline_scripts <- c(
-  # ── Common setup pipeline (shared) ───────────────────────────────────────
+  # ── Common setup pipeline ────────────────────────────────────────────────
   "01_download_JMP_data.R",                #  1 – Download JMP subnational Excel files
   "02_extract_JMP_regions.R",              #  2 – Extract region-level WASH indicators
   "03_link_regions_gadm.R",                #  3 – Link JMP regions to GADM/DHS/MICS boundaries
@@ -120,23 +118,8 @@ pipeline_scripts <- c(
   # ── Bivariate (WASH × WQ / pathogen) ─────────────────────────────────────
   "31_wash_wq_bivariate_matrix.R",         # 31 – Bivariate maps: WASH × water quality
   "31b_wash_pathogen_bivariate_matrix.R",  # 32 – Bivariate maps: WASH × pathogen quality
-  "32_wq_wash_population_trends.R",        # 33 – Population trends by WQ × WASH class
+  "32_wq_wash_population_trends.R"         # 33 – Population trends by WQ × WASH class
 
-  # ── Sanitation pipeline ──────────────────────────────────────────────────
-  "46_prepare_xgboost_data_sanit.R",       # 34 – Extract sanitation survey data + predictors
-  "47_train_xgboost_sanit.R",              # 35 – Train XGBoost ensembles (sanitation)
-  "48_analyse_xgboost_importance_sanit.R", # 36 – Variable importance (sanitation)
-  "49_prepare_adm0_data_sanit.R",          # 37 – Prepare ADM0 JMP sanitation (modern)
-  "49b_prepare_adm0_historical_sanit.R",   # 38 – Prepare ADM0 historical sanitation
-  "50_fill_adm0_sanit_with_xgboost.R",     # 39 – Fill ADM0 sanitation with XGBoost
-  "50b_merge_adm0_historical_modern_sanit.R", # 40 – Merge historical + modern ADM0 sanitation (delta-change)
-  "50c_merge_adm0_historical_modern_sanit.R", # 41 – Alternate merge historical + modern ADM0 sanitation
-  "51_fill_adm1_sanit_with_xgboost.R",     # 42 – Fill ADM1 sanitation with XGBoost
-  "52_rasterize_adm1_sanit.R",             # 43 – Ratio-adjust, normalise, rasterize (sanitation)
-  "53_sanit_slopes_maps.R",                # 44 – Theil-Sen slopes + tmap maps (sanitation)
-  "53b_sanit_slopes_maps_adm0.R",          # 45 – ADM0 Theil-Sen slopes + tmap maps (sanitation)
-  "54_sanit_population_estimates.R",       # 46 – Population per sanitation service level
-  "57_input_data_maps_sanit.R"             # 47 – Input-data coverage maps (ADM0/ADM1)
 )
 
 run_pipeline <- function(
@@ -161,19 +144,16 @@ run_common    <- function() run_pipeline(steps =  1:6)
 run_water     <- function() run_pipeline(steps =  7:27)
 run_wq        <- function() run_pipeline(steps = 28:30)
 run_bivariate <- function() run_pipeline(steps = 31:33)
-run_sanit     <- function() run_pipeline(steps = 34:47)
 
 message("Run run_pipeline() to execute all steps, or source individual scripts.")
 message("")
 message("Convenience wrappers:")
-message("  run_common()     – steps  1-6   (shared setup for water + sanitation)")
+message("  run_common()     – steps  1-6   (common setup)")
 message("  run_water()      – steps  7-27  (drinking-water pipeline + validation/KPI)")
 message("  run_wq()         – steps 28-30  (water-quality classification + extraction + maps)")
 message("  run_bivariate()  – steps 31-33  (WASH × WQ bivariate analyses)")
-message("  run_sanit()      – steps 34-47  (sanitation pipeline)")
 message("")
 message("Note: step 1 (download) can be skipped with run_pipeline(skip_download = TRUE)")
 message("      if JMP Excel files are already present in data_in/JMP_subnational/")
 message("Tip:  run_pipeline(steps = 8:27)  to re-run water from XGBoost training onward.")
 message("      run_pipeline(steps = 1:6)   to run only shared setup.")
-message("      run_pipeline(steps = 34:47) to run the full sanitation pipeline.")

@@ -51,7 +51,6 @@ predictor_cols <- c(
   "urban", "aridity", "gdi", "corruption", "gw_depth"
 )
 years_pred <- 1990:2023
-gadm_path <- "/Users/mkummu/R/GIS_data_common/gadm_410-levels.gpkg"
 
 clamp_pct <- function(x) {
   pmax(0, pmin(100, x))

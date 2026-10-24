@@ -44,14 +44,16 @@ suppressPackageStartupMessages({
 })
 
 ### 0. Setup ----
+source("config.R")
+paths <- subnat_wash_paths()
 years_in <- 1990:2023
 first_year <- years_in[1]
 last_year <- years_in[length(years_in)]
 ref_year <- 2019
 indicators <- c("Basic", "Limited", "Unimproved", "Surface.water")
 
-gadm_path <- "/Users/mkummu/R/GIS_data_common/gadm_410-levels.gpkg"
-pop_path <- "/Users/mkummu/R/GIS_data_common/GHS_POP/r_pop_GHS_1985_2025_5arcmin.tif"
+gadm_path <- paths$gadm
+pop_path <- paths$population
 adm0_data_path <- "results/JMP_adm0_water_merged_1990_2023.csv"
 adm0_simpl_path <- "results_gis/polyg_wash_adm0_geomonly_simpl.gpkg"
 

@@ -8,9 +8,11 @@ library(stringdist)
 library(readr)
 library(countrycode)
 
-gadm_path <- "/Users/mkummu/R/GIS_data_common/gadm_410-levels.gpkg"
-dhs_dir   <- "data_in/DHS_bndr"
-mics_dir  <- "data_in/MICS_bndr"
+source("config.R")
+paths <- subnat_wash_paths()
+gadm_path <- paths$gadm
+dhs_dir <- paths$dhs
+mics_dir <- paths$mics
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
 

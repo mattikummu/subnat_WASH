@@ -45,8 +45,10 @@ suppressPackageStartupMessages({
 dir.create("results", showWarnings = FALSE)
 
 ### 0. Paths and setup ----
-gadm_path <- "/Users/mkummu/R/GIS_data_common/gadm_410-levels.gpkg"
-pop_path  <- "/Users/mkummu/R/GIS_data_common/GHS_POP/r_pop_GHS_1985_2025_5arcmin.tif"
+source("config.R")
+paths <- subnat_wash_paths()
+gadm_path <- paths$gadm
+pop_path <- paths$population
 xlsx_path <- "data_in/JMP_2025_WLD.xlsx"
 
 our_rasters <- c(

@@ -29,6 +29,8 @@ suppressPackageStartupMessages({
 
 source("cache_prompt.R")
 source("functions/f_small_country_training.R")
+source("config.R")
+paths <- subnat_wash_paths()
 
 # Increase GDAL cache for faster raster I/O (MB).
 # Total cache footprint is roughly n_cores * cache_size_mb.
@@ -55,8 +57,8 @@ predictor_cols <- c(
 )
 years_pred <- 1990:2023
 n_years <- length(years_pred)
-gadm_path <- "/Users/mkummu/R/GIS_data_common/gadm_410-levels.gpkg"
-pop_path <- "/Users/mkummu/R/GIS_data_common/GHS_POP/r_pop_GHS_1985_2025_5arcmin.tif"
+gadm_path <- paths$gadm
+pop_path <- paths$population
 
 adm0_cache <- "results/global_adm0_predictors_1990_2023.csv"
 adm1_cache <- "results/global_adm1_predictors_1990_2023.csv"
@@ -241,25 +243,25 @@ worker_extract_predictor <- function(spec,
 }
 
 var_specs <- list(
-  list(path = "/Users/mkummu/R/subnat_poverty/results_gis/rast_poverty_combined_income_weighted_1990_2022.tif",
+  list(path = paths$predictors$poverty,
        name = "poverty", start = 1990),
-  list(path = "/Users/mkummu/R/hdi_subnat/results/rast_msch_1990_2023.tif",
+  list(path = paths$predictors$msch,
        name = "msch", start = 1990),
-  list(path = "/Users/mkummu/R/subnatGNI/results/rast_gnic_1990_2023.tif",
+  list(path = paths$predictors$gnic,
        name = "gnic", start = 1990, log = TRUE, log10 = FALSE),
-  list(path = "/Users/mkummu/R/subnatGini/results/rast_gini_disp_1990_2023.tif",
+  list(path = paths$predictors$gini,
        name = "gini", start = 1990),
-  list(path = "/Users/mkummu/R/misc/percentileNormalisation/output/urbanisationCntryWise_GHS2023a.tif",
+  list(path = paths$predictors$urban,
        name = "urban", start = 1985),
-  list(path = "/Users/mkummu/R/GIS_data_common/travel_time_cities/travel_time_to_cities_11.tif",
+  list(path = paths$predictors$travel_time,
        name = "travel_time", start = NA, log10 = TRUE),
-  list(path = "/Users/mkummu/R/migration_data_bee/results/aridity_index.tif",
+  list(path = paths$predictors$aridity,
        name = "aridity", start = NA),
-  list(path = "/Users/mkummu/R/hdi_subnat/results/rast_gdi_1990_2023.tif",
+  list(path = paths$predictors$gdi,
        name = "gdi", start = 1990),
-  list(path = "/Users/mkummu/R/vdem_democracy_dataPrep/results_gis/rast_vdem_adm1_v2x_corr_1990_2024.tif",
+  list(path = paths$predictors$corruption,
        name = "corruption", start = 1990),
-  list(path = "/Users/mkummu/R/GIS_data_common/GLOBGM_groundwater/globgm-wtd-ss.tif",
+  list(path = paths$predictors$gw_depth,
        name = "gw_depth", start = NA)
 )
 

@@ -1,0 +1,41 @@
+Package: subnatWASH
+Title: Subnational Drinking Water and Water Quality Pipeline
+Version: 0.1.0
+Authors@R: person("Matti", "Kummu", role = c("aut", "cre"))
+Description: Reproducible R workflow for estimating subnational drinking-water
+    and historical water-quality indicators.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+Depends: R (>= 4.6.0)
+Imports:
+    broom,
+    cols4all,
+    countrycode,
+    exactextractr,
+    furrr,
+    future,
+    geojsonio,
+    ggrepel,
+    httr,
+    isotone,
+    mblm,
+    pals,
+    patchwork,
+    plyr,
+    qgisprocess,
+    readxl,
+    rnaturalearth,
+    scico,
+    sf,
+    shapviz,
+    stringdist,
+    stringi,
+    terra,
+    tidymodels,
+    tidyterra,
+    tidyverse,
+    tmap,
+    vip,
+    xgboost,
+    zoo
