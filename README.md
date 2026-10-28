@@ -102,7 +102,7 @@ licensing restrictions. Place them in `data_in/` before running the pipeline.
   - `data_in/dynqual/pathogen_annualAvg_1980_2019.nc`
   - `data_in/dynqual/salinity_annualAvg_1980_2019.nc`
   - `data_in/dynqual/organic_annualAvg_1980_2019.nc`
-- **Download:** <https://doi.org/10.34894/3Q0BVQ> (Utrecht University Dataverse)
+- **Download:** <https://doi.org/10.5281/zenodo.18545092> (DynQual v3, Zenodo)
 - **Size:** ~8.2 GB total
 - **Note:** Annual average rasters 1980-2019. Required for the water-quality and bivariate pipelines.
 
@@ -112,12 +112,14 @@ All predictor rasters are population-weighted and extracted in script 05. They
 come from companion projects or public data sources. Paths are hard-coded in
 `05_extract_global_predictors.R` and must be updated to match your local setup.
 
+The socio-economic rasters are available from the authors by request.
+
 | Raster | Variable | Source | Reference |
 |---|---|---|---|
 | `r_pop_GHS_1985_2025_5arcmin.tif` | Population | GHSL (included) | [GHSL](https://human-settlement.emergency.copernicus.eu/) |
 | `travel_time_to_cities_11.tif` | Travel time to cities | MAP | Weiss et al. (2018), *Nature* |
 | `aridity_index.tif` | Aridity index | CGIAR-CSI | Zomer et al. (2022), *Scientific Data* |
-| `globgm-wtd-ss.tif` | Groundwater depth | GLOBGM | De Graaf et al. (2024), *Zenodo* |
+| `globgm-wtd-ss.tif` | Steady-state groundwater-table depth | GLOBGM (local copy; original download link unavailable) | Verkaik et al. (2024), *Geoscientific Model Development*, <https://doi.org/10.5194/gmd-17-275-2024> |
 | `rast_poverty_combined_income_weighted_1990_2022.tif` | Poverty | Companion project | Subnational poverty |
 | `rast_msch_1990_2023.tif` | Mean schooling | Companion project | Subnational HDI |
 | `rast_gnic_1990_2023.tif` | GNI per capita | Companion project | Subnational GNI |
@@ -169,6 +171,13 @@ run_pipeline(skip_download = TRUE)
 
 Before running, edit the hard-coded file paths in `05_extract_global_predictors.R`
 to point to your local copies of the predictor rasters (see table above).
+
+## Estimated runtime
+
+The full pipeline is estimated to require approximately 1-2 h on a
+workstation with local access to the input rasters. Runtime depends on hardware,
+disk I/O, raster storage location, available memory, and whether cached
+intermediate outputs are already present.
 
 ## Output
 
