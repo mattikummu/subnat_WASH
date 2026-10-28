@@ -174,6 +174,10 @@ to point to your local copies of the predictor rasters (see table above).
 
 ## Estimated runtime
 
+Installing the R package environment is estimated to require **10–30 minutes**;
+this excludes installing R, QGIS/GDAL system dependencies, and downloading the
+external input data.
+
 The full pipeline is estimated to require approximately 1-2 h on a
 workstation with local access to the input rasters. Runtime depends on hardware,
 disk I/O, raster storage location, available memory, and whether cached

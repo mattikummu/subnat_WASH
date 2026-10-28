@@ -22,3 +22,4 @@ results_gis/
 .DS_Store
 *.log
 *.rds
+*.zip
